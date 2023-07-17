@@ -32,6 +32,33 @@ local plugins = {
       })
     end,
   },
+
+  -- add lsp support
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "black",
+        "mypy",
+        "ruff",
+        "pyright",
+      },
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function ()
+      require "plugins.configs.lspconfig"
+      require "custom.configs.lspconfig"
+    end
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    ft = {"python"},
+    opts = function ()
+      return require "custom.configs.null_ls"
+    end
+  }
 }
 
 return plugins
