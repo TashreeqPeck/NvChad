@@ -11,11 +11,11 @@ local plugins = {
   {
     "kdheepak/lazygit.nvim",
     dependencies = {
-        "nvim-lua/plenary.nvim",
+      "nvim-lua/plenary.nvim",
     },
     cmd = { "LazyGit", "LazyGitFilter" },
     init = function()
-      require("core.utils").load_mappings("lazygit")
+      require("core.utils").load_mappings "lazygit"
     end,
   },
 
@@ -24,12 +24,12 @@ local plugins = {
     "folke/which-key.nvim",
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "whichkey")
-      local wk = require("which-key")
+      local wk = require "which-key"
       wk.setup(opts)
-      wk.register({
+      wk.register {
         ["<leader>f"] = { name = "+file/find" },
         ["<leader>g"] = { name = "+git" },
-      })
+      }
     end,
   },
 
@@ -40,6 +40,7 @@ local plugins = {
       ensure_installed = {
         -- lua
         "lua-language-server",
+        "stylua",
 
         -- python
         "black",
@@ -51,18 +52,21 @@ local plugins = {
   },
   {
     "neovim/nvim-lspconfig",
-    config = function ()
+    dependencies = {
+      "jose-elias-alvarez/null-ls.nvim",
+    },
+    config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
-    end
+    end,
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
-    ft = {"python"},
-    opts = function ()
+    ft = { "python" },
+    opts = function()
       return require "custom.configs.null_ls"
-    end
-  }
+    end,
+  },
 }
 
 return plugins

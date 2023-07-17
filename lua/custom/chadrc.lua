@@ -2,7 +2,7 @@
 local M = {}
 
 M.ui = {
-  theme = 'gruvbox',
+  theme = "gruvbox",
   tabufline = {
     lazyload = false,
   },
