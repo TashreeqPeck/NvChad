@@ -9,11 +9,14 @@ opt.relativenumber = true
 
 -- change default shell
 opt.shell = "pwsh"
-opt.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-opt.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-opt.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-opt.shellquote = ''
-opt.shellxquote = ''
+opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+opt.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+opt.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+opt.shellquote = ""
+opt.shellxquote = ""
+
+-- prevent cursor from wraping around lines
+opt.whichwrap = "b,s"
 
 -------------------------------------- autocmds ------------------------------------------
 local autocmd = vim.api.nvim_create_autocmd
