@@ -1,3 +1,4 @@
+local load_mappings = require("core.utils").load_mappings
 local plugins = {
   -- overwrite default nvim-tree options
   {
@@ -15,7 +16,7 @@ local plugins = {
     },
     cmd = { "LazyGit", "LazyGitFilter" },
     init = function()
-      require("core.utils").load_mappings "lazygit"
+      load_mappings "lazygit"
     end,
   },
 
@@ -44,6 +45,7 @@ local plugins = {
 
         -- python
         "black",
+        "debugpy",
         "mypy",
         "ruff",
         "pyright",
@@ -65,6 +67,45 @@ local plugins = {
     ft = { "python" },
     opts = function()
       return require "custom.configs.null_ls"
+    end,
+  },
+
+  -- add dap support
+  {
+    "mfussenegger/nvim-dap",
+    config = function()
+      load_mappings "dap"
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+    ft = "python",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "rcarriga/nvim-dap-ui",
+    },
+    config = function()
+      local path = vim.fn.stdpath "data" .. "/mason/packages/debugpy/venv/Scripts/python"
+      require("dap-python").setup(path)
+      load_mappings "dap_python"
+    end,
+  },
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+    },
+    config = function()
+      local dap = require "dap"
+      local dapui = require "dapui"
+
+      dapui.setup()
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        if require("nvim-tree.view").is_visible() then
+          vim.cmd "NvimTreeClose"
+        end
+        dapui.open()
+      end
     end,
   },
 }
